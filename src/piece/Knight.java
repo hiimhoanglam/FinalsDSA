@@ -1,5 +1,7 @@
 package piece;
 
+import Board.Board;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,6 @@ public class Knight extends Piece{
 
     @Override
     public String getType() {
-        return "KNIGHT";
+        return Board.KNIGHT;
     }
 }

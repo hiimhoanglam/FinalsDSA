@@ -1,5 +1,7 @@
 package piece;
 
+import Board.Board;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +20,7 @@ public class Queen extends Piece{
 
     @Override
     public String getType() {
-        return "Queen";
+        return Board.QUEEN;
     }
 
 }

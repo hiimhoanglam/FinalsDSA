@@ -35,6 +35,7 @@ public abstract class Piece {
      */
     public void move(Point newPoint) {
         if (getLegalMoves().contains(newPoint)) {
+            previous = current;
             current = newPoint;
         }
 //        System.out.println("Illegal moves");
