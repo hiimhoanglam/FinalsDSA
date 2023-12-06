@@ -1,7 +1,7 @@
 # FinalsDSA
-Finals Projects Chess for DSA
-\nGroup members:
-\nHoang Thiet Lam - Lead
-\nNguyen Dang Thuc
-\nBui Quang Viet
-\nThieu Van Long
+Finals Projects Chess for DSA\
+Group members:\
+Hoang Thiet Lam - Lead\
+Nguyen Dang Thuc\
+Bui Quang Viet\
+Thieu Van Long
