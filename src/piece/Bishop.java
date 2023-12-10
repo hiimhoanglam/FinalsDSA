@@ -2,12 +2,10 @@ package piece;
 
 import board.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+
 public class Bishop extends Piece{
-    private static final int[] CANDIDATE_OFFSETS = {-7,-9,7,9};
+    private static final int[] CANDIDATE_OFFSETS = Arrays.copyOfRange(Queen.CANDIDATE_OFFSETS,0,3);
     public Bishop(int piecePosition, Alliance alliance) {
         super(piecePosition, alliance);
     }

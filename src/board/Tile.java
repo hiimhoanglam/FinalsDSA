@@ -57,12 +57,10 @@ public abstract class Tile {
             super(coordinate);
             this.pieceOnTile = pieceOnTile;
         }
-
         @Override
         public boolean isOccupied() {
             return true;
         }
-
         @Override
         public Piece getPiece() {
             return pieceOnTile;
