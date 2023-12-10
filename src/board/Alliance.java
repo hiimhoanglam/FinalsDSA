@@ -1,2 +1,6 @@
-package board;public enum Alliance {
+package board;
+
+public enum Alliance {
+    WHITE,
+    BLACK
 }

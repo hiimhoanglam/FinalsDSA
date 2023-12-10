@@ -4,6 +4,9 @@ import piece.Piece;
 import java.util.Collections;
 import java.util.Map;
 import java.util.HashMap;
+
+import static board.BoardUtils.NUM_TILES;
+
 /*
 Coordinate are protected so that only subclasses can access it
 EMPTY_TILES are all the tiles available in the board(indexed from 0-63). In addition, the list of tiles cannot be mutated
@@ -19,7 +22,7 @@ public abstract class Tile {
 
     private static Map<Integer, Tile> createAllPossibleEmptyTiles() {
         final Map<Integer,Tile> emptyTileMap = new HashMap<>();
-        for (int i = 0; i < 64; i++) {
+        for (int i = 0; i < NUM_TILES; i++) {
             emptyTileMap.put(i,new EmptyTile(i));
         }
         return Collections.unmodifiableMap(emptyTileMap);
@@ -31,7 +34,7 @@ public abstract class Tile {
     private Tile(int coordinate) {
         this.coordinate = coordinate;
     }
-    public abstract boolean isEmptyTile();
+    public abstract boolean isOccupied();
     public abstract Piece getPiece();
     public static final class EmptyTile extends Tile{
         public EmptyTile(final int coordinate) {
@@ -39,7 +42,7 @@ public abstract class Tile {
         }
 
         @Override
-        public boolean isEmptyTile() {
+        public boolean isOccupied() {
             return false;
         }
 
@@ -50,13 +53,13 @@ public abstract class Tile {
     }
     public static final class OccupiedTile extends Tile {
         private final Piece pieceOnTile;
-        private OccupiedTile(int coordinate, Piece pieceOnTile) {
+        private OccupiedTile(int coordinate, final Piece pieceOnTile) {
             super(coordinate);
             this.pieceOnTile = pieceOnTile;
         }
 
         @Override
-        public boolean isEmptyTile() {
+        public boolean isOccupied() {
             return true;
         }
 
