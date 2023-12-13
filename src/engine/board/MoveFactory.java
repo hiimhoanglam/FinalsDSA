@@ -4,7 +4,7 @@ public class MoveFactory {
     private MoveFactory() {
         throw new RuntimeException("Impossible to instantiate");
     }
-    public static Move moveFactory(final Board board, final int targetCoordinate, final int currentCoordinate) {
+    public static Move createMove(final Board board, final int currentCoordinate, final int targetCoordinate) {
         for (final Move move: board.getAllLegalMoves()) {
             if (move.getCurrentCoordinate() == currentCoordinate && move.getTargetCoordinate() == targetCoordinate) {
                 return move;

@@ -45,9 +45,9 @@ public class Rook extends Piece{
     }
 
     protected static boolean firstColumnExclusions(final int targetCoordinate, final int candidateOffset) {
-        return BoardUtils.FIRST_COLUMN[targetCoordinate] && (candidateOffset == -1);
+        return BoardUtils.FIRST_FILE[targetCoordinate] && (candidateOffset == -1);
     }
     protected static boolean eighthColumnExclusions(final int targetCoordinate, final int candidateOffset) {
-        return BoardUtils.EIGHTH_COLUMN[targetCoordinate] && (candidateOffset == 1);
+        return BoardUtils.EIGHTH_FILE[targetCoordinate] && (candidateOffset == 1);
     }
 }
