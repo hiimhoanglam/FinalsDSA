@@ -1,5 +1,6 @@
 package engine.board;
 
+import engine.board.Alliance;
 import engine.piece.Piece;
 import engine.player.BlackPlayer;
 import engine.player.Player;
@@ -17,8 +18,8 @@ public class Board {
 
     private Board(final Builder builder) {
         this.gameBoard = createGameBoard(builder);
-        this.whiteActivePieces = getPieces(gameBoard,Alliance.WHITE);
-        this.blackActivePieces = getPieces(gameBoard,Alliance.BLACK);
+        this.whiteActivePieces = getPieces(gameBoard, Alliance.WHITE);
+        this.blackActivePieces = getPieces(gameBoard, Alliance.BLACK);
         final Collection<Move> whiteLegalMoves = getLegalMoves(this.whiteActivePieces);
         final Collection<Move> blackLegalMoves = getLegalMoves(this.blackActivePieces);
         this.whitePlayer = new WhitePlayer(this,whiteLegalMoves,blackLegalMoves);

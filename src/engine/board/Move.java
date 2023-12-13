@@ -8,7 +8,7 @@ import static engine.board.Board.*;
 
 public abstract class Move {
     /*
-    A engine.board that we can operate on
+    An engine.board that we can operate on
     The engine.piece that we just moved
     The destination that we legally can arrive
      */

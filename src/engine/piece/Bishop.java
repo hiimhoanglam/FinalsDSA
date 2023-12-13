@@ -1,5 +1,5 @@
 package engine.piece;
-
+import engine.board.Alliance;
 import engine.board.*;
 
 import java.util.*;
