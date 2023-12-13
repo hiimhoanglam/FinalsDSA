@@ -14,6 +14,7 @@ import static engine.board.Move.*;
 public class WhitePlayer extends Player{
     public WhitePlayer(final Board board, final Collection<Move> whiteLegalMoves, final Collection<Move> blackLegalMoves) {
         super(board, whiteLegalMoves, blackLegalMoves);
+
     }
     /*
     To castle legally we need to check for:
@@ -24,7 +25,7 @@ public class WhitePlayer extends Player{
     @Override
     protected Collection<Move> calculateKingCastle(final Collection<Move> playerLegalMoves, final Collection<Move> opponentLegalMoves) {
         final int rookShort = BoardUtils.NUM_TILES - 1;
-        final int rookLong = rookShort - 8;
+        final int rookLong = rookShort - 7;
         final Collection<Move> legalCastle = new ArrayList<>();
         if (getPlayerKing().firstMoveCheck.isFirstMove() && !this.isInCheck()) {
             /*King side castle*/

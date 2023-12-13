@@ -19,8 +19,8 @@ public class Board {
         this.gameBoard = createGameBoard(builder);
         this.whiteActivePieces = getPieces(gameBoard,Alliance.WHITE);
         this.blackActivePieces = getPieces(gameBoard,Alliance.BLACK);
-        final Collection<Move> whiteLegalMoves = getLegalMoves(this.whiteActivePieces);
-        final Collection<Move> blackLegalMoves = getLegalMoves(this.blackActivePieces);
+        Collection<Move> whiteLegalMoves = getLegalMoves(this.whiteActivePieces);
+        Collection<Move> blackLegalMoves = getLegalMoves(this.blackActivePieces);
         this.whitePlayer = new WhitePlayer(this,whiteLegalMoves,blackLegalMoves);
         this.blackPlayer = new BlackPlayer(this,whiteLegalMoves,blackLegalMoves);
         this.currentPlayer = builder.nextMoveMaker().choosePlayer(this.whitePlayer,this.blackPlayer);

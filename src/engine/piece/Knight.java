@@ -48,16 +48,16 @@ public class Knight extends Piece{
     }
     //Odd cases for checking legal moves of knights
     protected static boolean firstColumnExclusions(int coordinate, int offsets) {
-        return BoardUtils.FIRST_COLUMN[coordinate] && (offsets == -17 || offsets == -10 || offsets == 6 || offsets == 15);
+        return BoardUtils.FIRST_FILE[coordinate] && (offsets == -17 || offsets == -10 || offsets == 6 || offsets == 15);
     }
     protected static boolean secondColumnExclusions(int coordinate, int offsets) {
-        return BoardUtils.SECOND_COLUMN[coordinate] && (offsets == -10 || offsets == 6);
+        return BoardUtils.SECOND_FILE[coordinate] && (offsets == -10 || offsets == 6);
     }
     protected static boolean seventhColumnExclusions(int coordinate, int offsets) {
-        return BoardUtils.SEVENTH_COLUMN[coordinate] && (offsets == -6 || offsets == 10);
+        return BoardUtils.SEVENTH_FILE[coordinate] && (offsets == -6 || offsets == 10);
     }
     protected static boolean eighthColumnExclusions(int coordinate, int offsets) {
-        return BoardUtils.EIGHTH_COLUMN[coordinate] && (offsets == -15 || offsets == -6 || offsets == 10 || offsets == 17);
+        return BoardUtils.EIGHTH_FILE[coordinate] && (offsets == -15 || offsets == -6 || offsets == 10 || offsets == 17);
     }
 
 }

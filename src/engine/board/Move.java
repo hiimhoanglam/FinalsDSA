@@ -8,7 +8,7 @@ import static engine.board.Board.*;
 
 public abstract class Move {
     /*
-    A engine.board that we can operate on
+    An engine.board that we can operate on
     The engine.piece that we just moved
     The destination that we legally can arrive
      */
@@ -132,7 +132,7 @@ public abstract class Move {
     }
     public static final class PawnJump extends Move {
 
-        private PawnJump(Board board, Piece movedPiece, int targetCoordinate) {
+        public PawnJump(Board board, Piece movedPiece, int targetCoordinate) {
             super(board, movedPiece, targetCoordinate);
         }
 

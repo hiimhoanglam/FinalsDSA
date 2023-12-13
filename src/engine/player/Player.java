@@ -13,18 +13,18 @@ import java.util.List;
 
 public abstract class Player {
     protected final Board board;
-    protected final Collection<Move> legalMoves;
-    protected final Collection<Move> opponentMoves;
+    protected Collection<Move> legalMoves;
+    protected Collection<Move> opponentMoves;
     protected final King playerKing;
     protected final boolean isInCheck;
 
-    public Player(Board board, Collection<Move> legalMoves, Collection<Move> opponentMoves) {
+    public Player(Board board, Collection<Move> playerLegalMoves, Collection<Move> opponentMoves) {
         this.board = board;
-        legalMoves.addAll(calculateKingCastle(legalMoves,opponentMoves));
-        this.legalMoves = Collections.unmodifiableCollection(legalMoves);
+        this.playerKing = establishKing();
+        playerLegalMoves.addAll(calculateKingCastle(playerLegalMoves,opponentMoves));
+        this.legalMoves = playerLegalMoves;
         this.opponentMoves = opponentMoves;
-        playerKing = establishKing();
-        this.isInCheck = !calculateAttackMovesOnTile(playerKing.getPiecePosition(),opponentMoves).isEmpty();
+        this.isInCheck = !calculateAttackMovesOnTile(this.playerKing.getPiecePosition(),opponentMoves).isEmpty();
     }
 
     protected static Collection<Move> calculateAttackMovesOnTile(int coordinate,Collection<Move> opponentMoves) {
@@ -94,7 +94,7 @@ public abstract class Player {
                 transitionBoard.getCurrentPlayer().getOpponent().getPlayerKing().getPiecePosition(),
                 transitionBoard.getCurrentPlayer().getLegalMoves());
 
-        if (kingAttacks.isEmpty()) {
+        if (!kingAttacks.isEmpty()) {
                 return new MoveTransition(this.board,move,MoveStatus.PLAYER_IN_CHECK);
         }
         return new MoveTransition(transitionBoard,move,MoveStatus.DONE);

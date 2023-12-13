@@ -52,10 +52,10 @@ public class King extends Piece{
         return new King(move.getTargetCoordinate(),move.getMovedPiece().getPieceAlliance());
     }
     protected static boolean firstColumnExclusions(final int coordinate, final int offsets) {
-        return BoardUtils.FIRST_COLUMN[coordinate] && (offsets == -9 || offsets == 7 || offsets == -1);
+        return BoardUtils.FIRST_FILE[coordinate] && (offsets == -9 || offsets == 7 || offsets == -1);
     }
     protected static boolean eighthColumnExclusions(final int coordinate, final int offsets) {
-        return BoardUtils.EIGHTH_COLUMN[coordinate] && (offsets == -7 || offsets == 1 || offsets == 9);
+        return BoardUtils.EIGHTH_FILE[coordinate] && (offsets == -7 || offsets == 1 || offsets == 9);
     }
 
 }
