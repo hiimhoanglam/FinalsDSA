@@ -1,20 +1,22 @@
-package piece;
+package engine.piece;
 
-import board.*;
+import engine.board.*;
 
 import java.util.*;
 
-public class Bishop extends Piece{
-    private static final int[] CANDIDATE_OFFSETS = Arrays.copyOfRange(Queen.CANDIDATE_OFFSETS,0,3);
-    public Bishop(int piecePosition, Alliance alliance) {
+public class Rook extends Piece{
+    private static final int[] CANDIDATE_OFFSETS = Arrays.copyOfRange(Queen.CANDIDATE_OFFSETS,4,7);
+    public Rook(final int piecePosition, final Alliance alliance) {
         super(piecePosition, alliance);
+        this.firstMoveCheck = new FirstMoveCheck();
+        setPieceType(PieceType.ROOK);
     }
 
     @Override
     public Collection<Move> getLegalMoves(final Board board) {
         List<Move> legalMoves = new ArrayList<>();
         for (int candidate: CANDIDATE_OFFSETS) {
-            int currentPosition = getPiecePosition();
+            int currentPosition = this.piecePosition;
             while (BoardUtils.isValidCoordinate(currentPosition)) {
                 if (firstColumnExclusions(currentPosition,candidate) || eighthColumnExclusions(currentPosition,candidate)) {
                     break;
@@ -37,10 +39,15 @@ public class Bishop extends Piece{
         }
         return Collections.unmodifiableList(legalMoves);
     }
-    public static boolean firstColumnExclusions(final int targetCoordinate, final int candidateOffset) {
-        return BoardUtils.FIRST_COLUMN[targetCoordinate] && (candidateOffset == 7 || candidateOffset == -9);
+    @Override
+    public Rook movePiece(Move move) {
+        return new Rook(move.getTargetCoordinate(),move.getMovedPiece().getPieceAlliance());
     }
-    public static boolean eighthColumnExclusions(final int targetCoordinate, final int candidateOffset) {
-        return BoardUtils.EIGHTH_COLUMN[targetCoordinate] && (candidateOffset == -7 || candidateOffset == 9);
+
+    protected static boolean firstColumnExclusions(final int targetCoordinate, final int candidateOffset) {
+        return BoardUtils.FIRST_COLUMN[targetCoordinate] && (candidateOffset == -1);
+    }
+    protected static boolean eighthColumnExclusions(final int targetCoordinate, final int candidateOffset) {
+        return BoardUtils.EIGHTH_COLUMN[targetCoordinate] && (candidateOffset == 1);
     }
 }

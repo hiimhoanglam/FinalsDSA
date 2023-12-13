@@ -1,16 +1,16 @@
-package board;
+package engine.board;
 
-import piece.Piece;
+import engine.piece.Piece;
 import java.util.Collections;
 import java.util.Map;
 import java.util.HashMap;
 
-import static board.BoardUtils.NUM_TILES;
+import static engine.board.BoardUtils.NUM_TILES;
 
 /*
 Coordinate are protected so that only subclasses can access it
-EMPTY_TILES are all the tiles available in the board(indexed from 0-63). In addition, the list of tiles cannot be mutated
-There is a factory for creating a tile based on the piece available so that there is no dependencies on constructor
+EMPTY_TILES are all the tiles available in the engine.board(indexed from 0-63). In addition, the list of tiles cannot be mutated
+There is a factory for creating a tile based on the engine.piece available so that there is no dependencies on constructor
 => Better caching
 => Reduce garbage collection
 => Reduce memory footprint
@@ -36,6 +36,11 @@ public abstract class Tile {
     }
     public abstract boolean isOccupied();
     public abstract Piece getPiece();
+
+    public int getCoordinate() {
+        return this.coordinate;
+    }
+
     public static final class EmptyTile extends Tile{
         public EmptyTile(final int coordinate) {
             super(coordinate);
@@ -49,6 +54,11 @@ public abstract class Tile {
         @Override
         public Piece getPiece() {
             return null;
+        }
+
+        @Override
+        public String toString() {
+            return "-";
         }
     }
     public static final class OccupiedTile extends Tile {
@@ -64,6 +74,14 @@ public abstract class Tile {
         @Override
         public Piece getPiece() {
             return pieceOnTile;
+        }
+        /*
+        If the engine.piece is of the white engine.player, the string will be uppercase
+        If the engine.piece is of the black engine.player, the string will be lowercase
+         */
+        @Override
+        public String toString() {
+            return !getPiece().getPieceAlliance().isWhite() ? getPiece().toString().toLowerCase() : getPiece().toString();
         }
     }
 }

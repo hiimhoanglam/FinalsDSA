@@ -1,20 +1,24 @@
-package piece;
+package engine.piece;
 
-import board.*;
+import engine.board.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
-public class Rook extends Piece{
-    private static final int[] CANDIDATE_OFFSETS = Arrays.copyOfRange(Queen.CANDIDATE_OFFSETS,4,7);
-    public Rook(int piecePosition, Alliance alliance) {
+public class Queen extends Piece{
+    protected static final int[] CANDIDATE_OFFSETS = {-7,-9,7,9,-8,-1,8,1};
+    public Queen(final int piecePosition, final Alliance alliance) {
         super(piecePosition, alliance);
+        setPieceType(PieceType.QUEEN);
     }
 
     @Override
     public Collection<Move> getLegalMoves(final Board board) {
         List<Move> legalMoves = new ArrayList<>();
         for (int candidate: CANDIDATE_OFFSETS) {
-            int currentPosition = getPiecePosition();
+            int currentPosition = this.piecePosition;
             while (BoardUtils.isValidCoordinate(currentPosition)) {
                 if (firstColumnExclusions(currentPosition,candidate) || eighthColumnExclusions(currentPosition,candidate)) {
                     break;
@@ -37,10 +41,15 @@ public class Rook extends Piece{
         }
         return Collections.unmodifiableList(legalMoves);
     }
-    public static boolean firstColumnExclusions(final int targetCoordinate, final int candidateOffset) {
-        return BoardUtils.FIRST_COLUMN[targetCoordinate] && (candidateOffset == -1);
+    @Override
+    public Queen movePiece(Move move) {
+        return new Queen(move.getTargetCoordinate(),move.getMovedPiece().getPieceAlliance());
     }
-    public static boolean eighthColumnExclusions(final int targetCoordinate, final int candidateOffset) {
-        return BoardUtils.EIGHTH_COLUMN[targetCoordinate] && (candidateOffset == 1);
+    protected static boolean firstColumnExclusions(final int targetCoordinate, final int candidateOffset) {
+        return Bishop.firstColumnExclusions(targetCoordinate,candidateOffset) && Rook.firstColumnExclusions(targetCoordinate,candidateOffset);
     }
+    protected static boolean eighthColumnExclusions(final int targetCoordinate, final int candidateOffset) {
+        return Bishop.eighthColumnExclusions(targetCoordinate,candidateOffset) && Rook.eighthColumnExclusions(targetCoordinate,candidateOffset);
+    }
+
 }

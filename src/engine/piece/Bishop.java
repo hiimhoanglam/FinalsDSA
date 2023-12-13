@@ -1,16 +1,14 @@
-package piece;
+package engine.piece;
 
-import board.*;
+import engine.board.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
-public class Queen extends Piece{
-    protected static final int[] CANDIDATE_OFFSETS = {-7,-9,7,9,-8,-1,8,1};
-    public Queen(int piecePosition, Alliance alliance) {
+public class Bishop extends Piece{
+    private static final int[] CANDIDATE_OFFSETS = Arrays.copyOfRange(Queen.CANDIDATE_OFFSETS,0,3);
+    public Bishop(final int piecePosition, final Alliance alliance) {
         super(piecePosition, alliance);
+        setPieceType(PieceType.BISHOP);
     }
 
     @Override
@@ -40,10 +38,18 @@ public class Queen extends Piece{
         }
         return Collections.unmodifiableList(legalMoves);
     }
-    public static boolean firstColumnExclusions(final int targetCoordinate, final int candidateOffset) {
-        return Bishop.firstColumnExclusions(targetCoordinate,candidateOffset) && Rook.firstColumnExclusions(targetCoordinate,candidateOffset);
+
+    @Override
+    public Bishop movePiece(Move move) {
+        return new Bishop(move.getTargetCoordinate(),move.getMovedPiece().getPieceAlliance());
     }
-    public static boolean eighthColumnExclusions(final int targetCoordinate, final int candidateOffset) {
-        return Bishop.eighthColumnExclusions(targetCoordinate,candidateOffset) && Rook.eighthColumnExclusions(targetCoordinate,candidateOffset);
+
+
+    protected static boolean firstColumnExclusions(final int targetCoordinate, final int candidateOffset) {
+        return BoardUtils.FIRST_COLUMN[targetCoordinate] && (candidateOffset == 7 || candidateOffset == -9);
     }
+    protected static boolean eighthColumnExclusions(final int targetCoordinate, final int candidateOffset) {
+        return BoardUtils.EIGHTH_COLUMN[targetCoordinate] && (candidateOffset == -7 || candidateOffset == 9);
+    }
+
 }
