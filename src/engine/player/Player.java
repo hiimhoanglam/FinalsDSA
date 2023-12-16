@@ -36,6 +36,16 @@ public abstract class Player {
         }
         return Collections.unmodifiableCollection(attackMoves);
     }
+    public Collection<Move> getEscapeMoves() {
+        Collection<Move> escapeMoves = new ArrayList<>();
+        for (final Move move: legalMoves) {
+            final MoveTransition moveTransition = makeMove(move);
+            if (moveTransition.moveStatus == MoveStatus.DONE) {
+                escapeMoves.add(move);
+            }
+        }
+        return Collections.unmodifiableCollection(escapeMoves);
+    }
     protected boolean hasEscapeMoves() {
         for (final Move move: legalMoves) {
             final MoveTransition moveTransition = makeMove(move);

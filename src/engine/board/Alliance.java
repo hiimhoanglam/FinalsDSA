@@ -7,7 +7,7 @@ import engine.player.WhitePlayer;
 public enum Alliance {
     WHITE {
         @Override
-        public int getValue() {
+        public int getDirection() {
             return -1;
         }
 
@@ -17,13 +17,23 @@ public enum Alliance {
         }
 
         @Override
+        public int getOppositeDirection() {
+            return 1;
+        }
+
+        @Override
+        public boolean getPromotionSquare(int position) {
+            return BoardUtils.EIGHTH_RANK[position];
+        }
+
+        @Override
         public Player choosePlayer(final WhitePlayer whitePlayer, final BlackPlayer blackPlayer) {
             return whitePlayer;
         }
     },
     BLACK {
         @Override
-        public int getValue() {
+        public int getDirection() {
             return 1;
         }
 
@@ -33,12 +43,25 @@ public enum Alliance {
         }
 
         @Override
+        public int getOppositeDirection() {
+            return -1;
+        }
+
+        @Override
+        public boolean getPromotionSquare(int position) {
+            return BoardUtils.FIRST_RANK[position];
+        }
+
+        @Override
         public Player choosePlayer(final WhitePlayer whitePlayer, final BlackPlayer blackPlayer) {
             return blackPlayer;
         }
     };
 
-    public abstract int getValue();
+    public abstract int getDirection();
     public abstract boolean isWhite();
+    public abstract int getOppositeDirection();
+    public abstract boolean getPromotionSquare(int position);
+
     public abstract Player choosePlayer(WhitePlayer whitePlayer, BlackPlayer blackPlayer);
 }

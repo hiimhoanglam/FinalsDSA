@@ -18,10 +18,10 @@ There is a factory for creating a tile based on the engine.piece available so th
  */
 public abstract class Tile {
     protected final int coordinate;
-    private static final Map<Integer,Tile> EMPTY_TILES = createAllPossibleEmptyTiles();
+    private static final Map<Integer, Tile> EMPTY_TILES = createAllPossibleEmptyTiles();
 
     private static Map<Integer, Tile> createAllPossibleEmptyTiles() {
-        final Map<Integer,Tile> emptyTileMap = new HashMap<>();
+        final Map<Integer, Tile> emptyTileMap = new HashMap<>();
         for (int i = 0; i < NUM_TILES; i++) {
             emptyTileMap.put(i,new EmptyTile(i));
         }
@@ -41,7 +41,7 @@ public abstract class Tile {
         return this.coordinate;
     }
 
-    public static final class EmptyTile extends Tile{
+    public static final class EmptyTile extends Tile {
         public EmptyTile(final int coordinate) {
             super(coordinate);
         }

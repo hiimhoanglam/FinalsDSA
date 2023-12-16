@@ -40,11 +40,11 @@ public class WhitePlayer extends Player{
                 }
             }
             /*Queen side castle*/
-            if (this.board.getTile(rookLong).isOccupied() && this.board.getTile(rookShort).getPiece().getPieceType() == Piece.PieceType.ROOK
-                    && this.board.getTile(rookShort).getPiece().firstMoveCheck.isFirstMove()) {
-                if (this.board.getTile(57).isOccupied()
-                        && this.board.getTile(58).isOccupied()
-                        && this.board.getTile(59).isOccupied()) {
+            if (this.board.getTile(rookLong).isOccupied() && this.board.getTile(rookLong).getPiece().getPieceType() == Piece.PieceType.ROOK
+                    && this.board.getTile(rookLong).getPiece().firstMoveCheck.isFirstMove()) {
+                if (!this.board.getTile(57).isOccupied()
+                        && !this.board.getTile(58).isOccupied()
+                        && !this.board.getTile(59).isOccupied()) {
                     if (calculateAttackMovesOnTile(57,opponentLegalMoves).isEmpty()
                             && calculateAttackMovesOnTile(58,opponentLegalMoves).isEmpty()
                             && calculateAttackMovesOnTile(59,opponentLegalMoves).isEmpty()) {

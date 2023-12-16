@@ -5,7 +5,7 @@ import engine.board.*;
 import java.util.*;
 
 public class Bishop extends Piece{
-    private static final int[] CANDIDATE_OFFSETS = Arrays.copyOfRange(Queen.CANDIDATE_OFFSETS,0,3);
+    private static final int[] CANDIDATE_OFFSETS = {-7,-9,7,9};
     public Bishop(final int piecePosition, final Alliance alliance) {
         super(piecePosition, alliance);
         setPieceType(PieceType.BISHOP);
@@ -29,7 +29,7 @@ public class Bishop extends Piece{
                     else {
                         final Piece targetPiece = targetTile.getPiece();
                         if (this.pieceAlliance != targetPiece.getPieceAlliance()) {
-                            legalMoves.add(new Move.AttackMove(board,this,currentPosition,targetPiece));
+                            legalMoves.add(new Move.MajorAttackMove(board,this,currentPosition,targetPiece));
                         }
                         break;
                     }
