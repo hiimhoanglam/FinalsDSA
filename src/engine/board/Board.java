@@ -1,5 +1,6 @@
 package engine.board;
 
+import engine.piece.Pawn;
 import engine.piece.Piece;
 import engine.player.BlackPlayer;
 import engine.player.Player;
@@ -13,12 +14,14 @@ public class Board {
     private final Collection<Piece> blackActivePieces;
     private final WhitePlayer whitePlayer;
     private final BlackPlayer blackPlayer;
+    private final Pawn enPassantPawn;
     private final Player currentPlayer;
 
     private Board(final Builder builder) {
         this.gameBoard = createGameBoard(builder);
         this.whiteActivePieces = getPieces(gameBoard,Alliance.WHITE);
         this.blackActivePieces = getPieces(gameBoard,Alliance.BLACK);
+        this.enPassantPawn = builder.getEnPassantPawn();
         Collection<Move> whiteLegalMoves = getLegalMoves(this.whiteActivePieces);
         Collection<Move> blackLegalMoves = getLegalMoves(this.blackActivePieces);
         this.whitePlayer = new WhitePlayer(this,whiteLegalMoves,blackLegalMoves);
@@ -26,7 +29,12 @@ public class Board {
         this.currentPlayer = builder.nextMoveMaker().choosePlayer(this.whitePlayer,this.blackPlayer);
     }
 
-
+    public Collection<Piece> getAllPieces() {
+        final Collection<Piece> allPieces = new ArrayList<>();
+        allPieces.addAll(whiteActivePieces);
+        allPieces.addAll(blackActivePieces);
+        return Collections.unmodifiableCollection(allPieces);
+    }
     public Collection<Piece> getWhiteActivePieces() {
         return whiteActivePieces;
     }
@@ -45,6 +53,11 @@ public class Board {
     public Player getCurrentPlayer() {
         return this.currentPlayer;
     }
+
+    public Pawn getEnPassantPawn() {
+        return enPassantPawn;
+    }
+
     public Collection<Move> getAllLegalMoves() {
         Collection<Move> allLegalMoves = getLegalMoves(whiteActivePieces);
         allLegalMoves.addAll(getLegalMoves(blackActivePieces));
@@ -111,6 +124,15 @@ public class Board {
     public static class Builder {
         Map<Integer,Piece> boardConfig;
         Alliance nextMove;
+        Pawn enPassantPawn;
+
+        public Pawn getEnPassantPawn() {
+            return enPassantPawn;
+        }
+
+        public void setEnPassantPawn(Pawn enPassantPawn) {
+            this.enPassantPawn = enPassantPawn;
+        }
 
         public Builder() {
             boardConfig = new HashMap<>();

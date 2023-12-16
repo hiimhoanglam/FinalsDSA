@@ -47,7 +47,7 @@ public abstract class Piece{
         return piecePosition == piece.piecePosition && pieceAlliance == piece.pieceAlliance && Objects.equals(firstMoveCheck, piece.firstMoveCheck);
     }
     private int calculateHashCode() {
-        return Objects.hash(piecePosition, pieceAlliance, firstMoveCheck);
+        return Objects.hash(piecePosition, pieceAlliance, firstMoveCheck,pieceType,firstMoveCheck);
     }
     @Override
     public int hashCode() {
@@ -60,23 +60,32 @@ public abstract class Piece{
     }
 
     /*
-            Method to check if a engine.piece is a King.
-            Default value is false. Only the King class have to override this method and return true
-             */
+    Method to check if a piece is a King.
+    Default value is false. Only the King class have to override this method and return true
+     */
     public boolean isKing() {
         return false;
     }
 
+    public int getPieceValue() {
+        return this.pieceType.getPieceValue();
+    }
+
     public enum PieceType {
-        QUEEN("Q"),
-        BISHOP("B"),
-        ROOK("R"),
-        KING("K"),
-        PAWN("P"),
-        KNIGHT("N");
+        QUEEN("Q",900),
+        BISHOP("B",500),
+        ROOK("R",700),
+        KING("K",1000),
+        PAWN("P",200),
+        KNIGHT("N",500);
         private final String pieceType;
-        PieceType(final String pieceType) {
+        private final int pieceValue;
+        PieceType(final String pieceType, final int pieceValue) {
             this.pieceType = pieceType;
+            this.pieceValue = pieceValue;
+        }
+        public int getPieceValue() {
+            return this.pieceValue;
         }
 
         @Override

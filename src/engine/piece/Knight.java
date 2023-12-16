@@ -22,8 +22,8 @@ public class Knight extends Piece{
             //There is a legal tile to move to
             if (BoardUtils.isValidCoordinate(targetCoordinate)) {
                 //Checking for bug cases when generating legal moves of a knight
-                if (firstColumnExclusions(targetCoordinate,candidateOffset) || secondColumnExclusions(targetCoordinate,candidateOffset)
-                || seventhColumnExclusions(targetCoordinate,candidateOffset) || eighthColumnExclusions(targetCoordinate,candidateOffset)) {
+                if (firstColumnExclusions(piecePosition,candidateOffset) || secondColumnExclusions(piecePosition,candidateOffset)
+                || seventhColumnExclusions(piecePosition,candidateOffset) || eighthColumnExclusions(piecePosition,candidateOffset)) {
                     continue;
                 }
                 final Tile targetDestination = board.getTile(targetCoordinate);
@@ -31,11 +31,11 @@ public class Knight extends Piece{
                     legalMoves.add(new Move.MajorMove(board,this,targetCoordinate));
                 }
                 else {
-                    //If there is an opponent engine.piece on our path
+                    //If there is an opponent piece on our path
                     final Piece targetPiece = targetDestination.getPiece();
                     final Alliance targetAlliance = targetPiece.getPieceAlliance();
                     if (pieceAlliance != targetAlliance) {
-                        legalMoves.add(new Move.AttackMove(board,this,targetCoordinate,targetPiece));
+                        legalMoves.add(new Move.MajorAttackMove(board,this,targetCoordinate,targetPiece));
                     }
                 }
             }

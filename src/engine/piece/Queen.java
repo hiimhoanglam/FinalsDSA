@@ -32,7 +32,7 @@ public class Queen extends Piece{
                     else {
                         final Piece targetPiece = targetTile.getPiece();
                         if (this.pieceAlliance != targetPiece.getPieceAlliance()) {
-                            legalMoves.add(new Move.AttackMove(board,this,currentPosition,targetPiece));
+                            legalMoves.add(new Move.MajorAttackMove(board,this,currentPosition,targetPiece));
                         }
                         break;
                     }
@@ -45,11 +45,13 @@ public class Queen extends Piece{
     public Queen movePiece(Move move) {
         return new Queen(move.getTargetCoordinate(),move.getMovedPiece().getPieceAlliance());
     }
-    protected static boolean firstColumnExclusions(final int targetCoordinate, final int candidateOffset) {
-        return Bishop.firstColumnExclusions(targetCoordinate,candidateOffset) && Rook.firstColumnExclusions(targetCoordinate,candidateOffset);
+    protected static boolean firstColumnExclusions(final int currentPosition, final int candidateOffset) {
+        return BoardUtils.FIRST_FILE[currentPosition] && ((candidateOffset == -9)
+                || (candidateOffset == -1) || (candidateOffset == 7));
     }
-    protected static boolean eighthColumnExclusions(final int targetCoordinate, final int candidateOffset) {
-        return Bishop.eighthColumnExclusions(targetCoordinate,candidateOffset) && Rook.eighthColumnExclusions(targetCoordinate,candidateOffset);
+    protected static boolean eighthColumnExclusions(final int currentPosition, final int candidateOffset) {
+        return BoardUtils.EIGHTH_FILE[currentPosition] && ((candidateOffset == -7)
+                || (candidateOffset == 1) || (candidateOffset == 9));
     }
 
 }
