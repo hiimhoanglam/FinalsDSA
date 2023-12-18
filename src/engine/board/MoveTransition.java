@@ -1,7 +1,4 @@
-package engine.player;
-
-import engine.board.Board;
-import engine.board.Move;
+package engine.board;
 
 public class MoveTransition {
     /*

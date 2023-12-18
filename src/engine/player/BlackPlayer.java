@@ -16,8 +16,8 @@ public class BlackPlayer extends Player{
         super(board, blackLegalMoves, whiteLegalMoves);
     }
     @Override
-    protected Collection<Move> calculateKingCastle(final Collection<Move> playerLegalMoves, final Collection<Move> opponentLegalMoves) {
-        final int rookShort = BoardUtils.NUM_TILES_PER_COLUMN - 1;
+    public Collection<Move> calculateKingCastle(final Collection<Move> playerLegalMoves, final Collection<Move> opponentLegalMoves) {
+        final int rookShort = 7;
         final int rookLong = 0;
         final Collection<Move> legalCastle = new ArrayList<>();
         if (getPlayerKing().firstMoveCheck.isFirstMove() && !this.isInCheck) {
@@ -46,7 +46,7 @@ public class BlackPlayer extends Player{
                 }
             }
         }
-        return Collections.unmodifiableCollection(legalCastle);
+        return legalCastle;
     }
 
     @Override
@@ -62,5 +62,10 @@ public class BlackPlayer extends Player{
     @Override
     public Player getOpponent() {
         return board.getWhitePlayer();
+    }
+
+    @Override
+    public String toString() {
+        return Alliance.BLACK.toString();
     }
 }

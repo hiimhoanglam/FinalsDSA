@@ -1,8 +1,6 @@
 package engine.player;
 
-import engine.board.Alliance;
-import engine.board.Board;
-import engine.board.Move;
+import engine.board.*;
 import engine.piece.King;
 import engine.piece.Piece;
 
@@ -17,6 +15,7 @@ public abstract class Player {
     protected Collection<Move> opponentMoves;
     protected final King playerKing;
     protected final boolean isInCheck;
+    protected final boolean isInStalemate;
 
     public Player(Board board, Collection<Move> playerLegalMoves, Collection<Move> opponentMoves) {
         this.board = board;
@@ -25,6 +24,7 @@ public abstract class Player {
         this.legalMoves = playerLegalMoves;
         this.opponentMoves = opponentMoves;
         this.isInCheck = !calculateAttackMovesOnTile(this.playerKing.getPiecePosition(),opponentMoves).isEmpty();
+        this.isInStalemate = playerLegalMoves.size() == 0 && opponentMoves.size() == 0;
     }
 
     protected static Collection<Move> calculateAttackMovesOnTile(int coordinate,Collection<Move> opponentMoves) {
@@ -40,7 +40,7 @@ public abstract class Player {
         Collection<Move> escapeMoves = new ArrayList<>();
         for (final Move move: legalMoves) {
             final MoveTransition moveTransition = makeMove(move);
-            if (moveTransition.moveStatus == MoveStatus.DONE) {
+            if (moveTransition.getMoveStatus() == MoveStatus.DONE) {
                 escapeMoves.add(move);
             }
         }
@@ -49,7 +49,7 @@ public abstract class Player {
     protected boolean hasEscapeMoves() {
         for (final Move move: legalMoves) {
             final MoveTransition moveTransition = makeMove(move);
-            if (moveTransition.moveStatus == MoveStatus.DONE) {
+            if (moveTransition.getMoveStatus() == MoveStatus.DONE) {
                 return true;
             }
         }
@@ -74,7 +74,7 @@ public abstract class Player {
     public Collection<Move> getLegalMoves() {
         return legalMoves;
     }
-    protected abstract Collection<Move> calculateKingCastle(Collection<Move> playerLegalMoves, Collection<Move> opponentLegalMoves);
+    public abstract Collection<Move> calculateKingCastle(Collection<Move> playerLegalMoves, Collection<Move> opponentLegalMoves);
 
     /* TODO IMPLEMENT ABOVE METHODS */
     public boolean isInCheck() {
@@ -84,7 +84,7 @@ public abstract class Player {
         return isInCheck && !hasEscapeMoves();
     }
     public boolean isInStaleMate() {
-        return false;
+        return isInStalemate;
     }
     public boolean isCastled() {
         return false;

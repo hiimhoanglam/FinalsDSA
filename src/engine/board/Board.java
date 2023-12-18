@@ -59,8 +59,8 @@ public class Board {
     }
 
     public Collection<Move> getAllLegalMoves() {
-        Collection<Move> allLegalMoves = getLegalMoves(whiteActivePieces);
-        allLegalMoves.addAll(getLegalMoves(blackActivePieces));
+        Collection<Move> allLegalMoves =(this.currentPlayer.getLegalMoves());
+        allLegalMoves.addAll(this.currentPlayer.getOpponent().getLegalMoves());
         return allLegalMoves;
     }
 
@@ -96,6 +96,11 @@ public class Board {
     }
     public static Board initBoard() {
         Builder builder = FenUtility.loadPosition(FenUtility.startFen);
+        builder.setMoveMaker(Alliance.WHITE);
+        return builder.build();
+    }
+    public static Board initBoard(String fen) {
+        Builder builder = FenUtility.loadPosition(fen);
         builder.setMoveMaker(Alliance.WHITE);
         return builder.build();
     }
