@@ -322,7 +322,7 @@ public abstract class Move {
             Builder builder = new Builder();
             for (final Piece piece: board.getCurrentPlayer().getActivePieces()) {
                 //Ignore current king and current rook
-                if (!piece.equals(this.movedPiece) || !piece.equals(getCastleRook())) {
+                if (!piece.equals(this.movedPiece) && !piece.equals(getCastleRook())) {
                     builder.setPiece(piece);
                 }
             }
@@ -332,7 +332,7 @@ public abstract class Move {
             King newKing = (King) this.movedPiece.movePiece(this);
             newKing.firstMoveCheck.setFirstMove(false);
             builder.setPiece(newKing);
-            int rookDestination = 56;
+            int rookDestination = 0;
             //Calculate the destination for the rook. If castled queen side: destination = newKingPosition + 1
             if (getCastleRook().getPiecePosition() == 0 || getCastleRook().getPiecePosition() == 56) {
                 rookDestination = targetCoordinate + 1;

@@ -1,7 +1,7 @@
 package gui;
 import engine.board.*;
 import engine.piece.Piece;
-import engine.player.MoveTransition;
+import engine.board.MoveTransition;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,11 +34,12 @@ public class Table {
     private Tile sourceTile;
     private Tile destinationTile;
     private Piece humanMovedPiece;
-    private MoveLog moveLog;
+    private final MoveLog moveLog;
     private final BoardPanel boardPanel;
     private boolean highlightLegal;
     public Table() {
         this.chessBoard = Board.initBoard();
+//        this.chessBoard = Board.initBoard("r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w KQkq - 0 1");
         this.boardDirection = BoardDirection.NORMAL;
         this.boardPanel = new BoardPanel();
         this.gameHistoryPanel = new GameHistoryPanel();
@@ -260,6 +261,12 @@ public class Table {
 //                return board.getCurrentPlayer().getEscapeMoves();
 //            }
             if (humanMovedPiece != null && humanMovedPiece.getPieceAlliance() == board.getCurrentPlayer().getAlliance()) {
+                if (humanMovedPiece.isKing()) {
+                    final Collection<Move> kingLegalMoves = humanMovedPiece.getLegalMoves(board);
+                    kingLegalMoves.addAll(board.getCurrentPlayer().calculateKingCastle(board.getCurrentPlayer().getLegalMoves()
+                        ,board.getCurrentPlayer().getOpponent().getLegalMoves()));
+                    return kingLegalMoves;
+                }
                 return humanMovedPiece.getLegalMoves(board);
             }
             return Collections.emptyList();

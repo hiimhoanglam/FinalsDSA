@@ -1,4 +1,4 @@
-package engine.player;
+package engine.board;
 
 public enum MoveStatus {
     DONE {

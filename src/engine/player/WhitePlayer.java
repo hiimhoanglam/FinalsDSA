@@ -23,9 +23,9 @@ public class WhitePlayer extends Player{
     If the path between the rook and the king are not attacked by an opponent engine.piece
      */
     @Override
-    protected Collection<Move> calculateKingCastle(final Collection<Move> playerLegalMoves, final Collection<Move> opponentLegalMoves) {
-        final int rookShort = BoardUtils.NUM_TILES - 1;
-        final int rookLong = rookShort - 7;
+    public Collection<Move> calculateKingCastle(final Collection<Move> playerLegalMoves, final Collection<Move> opponentLegalMoves) {
+        final int rookShort = 63;
+        final int rookLong = 56;
         final Collection<Move> legalCastle = new ArrayList<>();
         if (getPlayerKing().firstMoveCheck.isFirstMove() && !this.isInCheck()) {
             /*King side castle*/
@@ -53,7 +53,8 @@ public class WhitePlayer extends Player{
                 }
             }
         }
-        return Collections.unmodifiableCollection(legalCastle);
+
+        return legalCastle;
     }
     @Override
     public Collection<Piece> getActivePieces() {
@@ -70,6 +71,8 @@ public class WhitePlayer extends Player{
         return board.getBlackPlayer();
     }
 
-
-
+    @Override
+    public String toString() {
+        return Alliance.WHITE.toString();
+    }
 }

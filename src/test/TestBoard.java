@@ -1,8 +1,9 @@
 package test;
 
-import engine.board.Board;
-import engine.board.Move;
+import engine.board.*;
 import engine.piece.Piece;
+import engine.player.ai.Minimax;
+import engine.player.ai.MoveStrategy;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -37,5 +38,35 @@ public class TestBoard {
 //        assertTrue(board.getCurrentPlayer().getOpponent().isQueenSideCastleCapable());
 //        assertEquals("White", board.getWhitePlayer().toString());
 //        assertEquals("Black", board.getBlackPlayer().toString());
+    }
+    @Test
+    public void testFoolsMate() {
+
+        final Board board = Board.initBoard();
+        final MoveTransition t1 = board.getCurrentPlayer()
+                .makeMove(MoveFactory.createMove(board, BoardUtils.getCoordinateAtPosition("f2"),
+                        BoardUtils.getCoordinateAtPosition("f3")));
+
+        assertTrue(t1.getMoveStatus().isDone());
+
+        final MoveTransition t2 = t1.getBoard()
+                .getCurrentPlayer()
+                .makeMove(MoveFactory.createMove(t1.getBoard(), BoardUtils.getCoordinateAtPosition("e7"),
+                        BoardUtils.getCoordinateAtPosition("e5")));
+
+        assertTrue(t2.getMoveStatus().isDone());
+
+        final MoveTransition t3 = t2.getBoard()
+                .getCurrentPlayer()
+                .makeMove(MoveFactory.createMove(t2.getBoard(), BoardUtils.getCoordinateAtPosition("g2"),
+                        BoardUtils.getCoordinateAtPosition("g4")));
+
+        assertTrue(t3.getMoveStatus().isDone());
+
+        final MoveStrategy minimax = new Minimax(4);
+        final Move aiMove = minimax.execute(t3.getBoard());
+        final Move bestMove = MoveFactory.createMove(t3.getBoard(),BoardUtils.getCoordinateAtPosition("d8"),
+                BoardUtils.getCoordinateAtPosition("h4"));
+        assertEquals(aiMove,bestMove);
     }
 }

@@ -1,5 +1,7 @@
 package engine.board;
 
+import java.util.Collection;
+
 public class MoveFactory {
     private MoveFactory() {
         throw new RuntimeException("Impossible to instantiate");

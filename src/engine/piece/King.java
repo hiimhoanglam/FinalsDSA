@@ -1,6 +1,7 @@
 package engine.piece;
 
 import engine.board.*;
+import engine.player.Player;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -45,7 +46,7 @@ public class King extends Piece{
                 }
             }
         }
-        return Collections.unmodifiableCollection(legalMoves);
+        return legalMoves;
     }
     @Override
     public King movePiece(Move move) {
