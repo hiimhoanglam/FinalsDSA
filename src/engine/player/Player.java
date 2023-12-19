@@ -76,7 +76,6 @@ public abstract class Player {
     }
     public abstract Collection<Move> calculateKingCastle(Collection<Move> playerLegalMoves, Collection<Move> opponentLegalMoves);
 
-    /* TODO IMPLEMENT ABOVE METHODS */
     public boolean isInCheck() {
         return isInCheck;
     }

@@ -54,7 +54,6 @@ public class Pawn extends Piece{
                         || (firstColumnExclusions(this.piecePosition,candidateOffsets) && this.pieceAlliance == Alliance.BLACK))) {
                         final Tile candidateTile = board.getTile(candidatePosition);
                         if (candidateTile.isOccupied()) {
-                            /*TODO PROMOTION*/
                             if (this.getPieceAlliance() != candidateTile.getPiece().pieceAlliance) {
                                 boolean check = this.pieceAlliance.getPromotionSquare(candidatePosition);
                                 if (check) {
@@ -80,7 +79,7 @@ public class Pawn extends Piece{
                 else if (candidateOffsets == 9) {
                     if (!((firstColumnExclusions(this.piecePosition,candidateOffsets) && this.pieceAlliance == Alliance.WHITE)
                             || (eighthColumnExclusions(this.piecePosition,candidateOffsets) && this.pieceAlliance == Alliance.BLACK))) {
-                        /*TODO PROMOTION*/
+
                         final Tile candidateTile = board.getTile(candidatePosition);
                         if (candidateTile.isOccupied()) {
                             if (this.getPieceAlliance() != candidateTile.getPiece().pieceAlliance) {

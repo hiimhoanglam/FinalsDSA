@@ -50,7 +50,6 @@ public class BoardUtils {
         }
         return row;
     }
-    //TODO
     private static List<String> initializeAlgebraicNotation() {
         return Collections.unmodifiableList(Arrays.asList(
                 "a8", "b8", "c8", "d8", "e8", "f8", "g8", "h8",
