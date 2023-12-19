@@ -13,4 +13,11 @@ public class AlphaBeta implements MoveStrategy{
     public Move execute(Board board) {
         return null;
     }
+    //TODO
+    public int min(final Board board, final int depth, final int alpha, final int beta) {
+        return 0;
+    }
+    public int max(final Board board, final int depth, final int alpha, final int beta) {
+        return 0;
+    }
 }
