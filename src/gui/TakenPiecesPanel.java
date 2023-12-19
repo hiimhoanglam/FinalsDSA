@@ -17,8 +17,8 @@ import java.util.ArrayList;
 
 /*
 Panel for showing the piece that a side has taken
-The white player will be shown the TODO
-The black player will be shown the TODO
+The white player will be shown the black pieces
+The black player will be shown the white pieces
  */
 public class TakenPiecesPanel extends JPanel {
     private static final Dimension TAKEN_PIECES_PANEL_DIMENSION = new Dimension(40,80);
