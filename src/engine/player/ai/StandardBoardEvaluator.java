@@ -2,15 +2,30 @@ package engine.player.ai;
 
 import engine.board.Board;
 import engine.piece.Piece;
-import engine.player.BlackPlayer;
 import engine.player.Player;
-import engine.player.WhitePlayer;
 
 public class StandardBoardEvaluator implements BoardEvaluator {
+    private static volatile StandardBoardEvaluator instance;
     private static final int CASTLE_BONUS = 60;
     private static final int CHECKMATE_BONUS = 10000;
     private static final int CHECK_BONUS = 70;
     private static final int DEPTH_BONUS = 100;
+
+    private StandardBoardEvaluator() {
+    }
+
+    public static StandardBoardEvaluator getInstance() {
+        StandardBoardEvaluator result = instance;
+        if (result != null) {
+            return result;
+        }
+        synchronized(StandardBoardEvaluator.class) {
+            if (instance == null) {
+                instance = new StandardBoardEvaluator();
+            }
+            return instance;
+        }
+    }
 
     @Override
     public int evaluate(final Board board, final int depth) {

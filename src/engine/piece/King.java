@@ -37,7 +37,7 @@ public class King extends Piece{
                     legalMoves.add(new Move.MajorMove(board,this,targetCoordinate));
                 }
                 else {
-                    //If there is an opponent engine.piece on our path
+                    //If there is an opponent piece on our path
                     final Piece targetPiece = targetDestination.getPiece();
                     final Alliance targetAlliance = targetPiece.getPieceAlliance();
                     if (pieceAlliance != targetAlliance) {

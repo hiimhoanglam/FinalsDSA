@@ -2,6 +2,7 @@ package test;
 
 import engine.board.*;
 import engine.piece.Piece;
+import engine.player.ai.AlphaBeta;
 import engine.player.ai.Minimax;
 import engine.player.ai.MoveStrategy;
 import org.junit.Test;
@@ -63,8 +64,8 @@ public class TestBoard {
 
         assertTrue(t3.getMoveStatus().isDone());
 
-        final MoveStrategy minimax = new Minimax(4);
-        final Move aiMove = minimax.execute(t3.getBoard());
+        final MoveStrategy strategy = new AlphaBeta(4);
+        final Move aiMove = strategy.execute(t3.getBoard());
         final Move bestMove = MoveFactory.createMove(t3.getBoard(),BoardUtils.getCoordinateAtPosition("d8"),
                 BoardUtils.getCoordinateAtPosition("h4"));
         assertEquals(aiMove,bestMove);

@@ -20,7 +20,7 @@ public class BlackPlayer extends Player{
         final int rookShort = 7;
         final int rookLong = 0;
         final Collection<Move> legalCastle = new ArrayList<>();
-        if (getPlayerKing().firstMoveCheck.isFirstMove() && !this.isInCheck) {
+        if (this.kingFirstMove  && !this.isInCheck) {
             /*King side castle*/
             if (this.board.getTile(rookShort).isOccupied() && this.board.getTile(rookShort).getPiece().getPieceType() == Piece.PieceType.ROOK
                     && this.board.getTile(rookShort).getPiece().firstMoveCheck.isFirstMove()) {

@@ -2,7 +2,7 @@ package gui;
 import engine.board.*;
 import engine.piece.Piece;
 import engine.board.MoveTransition;
-import engine.player.Player;
+import engine.player.ai.AlphaBeta;
 import engine.player.ai.Minimax;
 import engine.player.ai.MoveStrategy;
 
@@ -22,11 +22,11 @@ import java.util.concurrent.ExecutionException;
 
 public class Table  {
     private final PropertyChangeSupport support;
-    private static volatile Table INSTANCE;
+    private static volatile Table instance;
     JFrame gameFrame;
     private final GameHistoryPanel gameHistoryPanel;
     private final TakenPiecesPanel takenPiecesPanel;
-    private GameSetup gameSetup;
+    private final GameSetup gameSetup;
 
     private static final Dimension OUTER_FRAME = new Dimension(600,600);
     private static final Dimension BOARD_PANEL_DIMENSION = new Dimension(500,500);
@@ -45,7 +45,7 @@ public class Table  {
     private Move computerMove;
 
     private Table() {
-        this.gameBoard = Board.initBoard();
+        this.gameBoard = Board.initBoard("r3k2r/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/R3K2R w KQkq - 0 1");
 //        this.chessBoard = Board.initBoard("r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w KQkq - 0 1");
         this.boardDirection = BoardDirection.NORMAL;
         this.boardPanel = new BoardPanel();
@@ -74,15 +74,15 @@ public class Table  {
 
     }
     public static Table getTable() {
-        Table result = INSTANCE;
+        Table result = instance;
         if (result != null) {
             return result;
         }
         synchronized(Table.class) {
-            if (INSTANCE == null) {
-                INSTANCE = new Table();
+            if (instance == null) {
+                instance = new Table();
             }
-            return INSTANCE;
+            return instance;
         }
     }
 
@@ -119,10 +119,15 @@ public class Table  {
     }
 
     public void show() {
-        Table.getTable().getMoveLog().clear();
-        Table.getTable().getGameHistoryPanel().redo(gameBoard, Table.getTable().getMoveLog());
-        Table.getTable().getTakenPiecesPanel().redo(Table.getTable().getMoveLog());
-        Table.getTable().getBoardPanel().drawBoard(Table.getTable().getGameBoard());
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                Table.getTable().getMoveLog().clear();
+                Table.getTable().getGameHistoryPanel().redo(gameBoard, Table.getTable().getMoveLog());
+                Table.getTable().getTakenPiecesPanel().redo(Table.getTable().getMoveLog());
+                Table.getTable().getBoardPanel().drawBoard(Table.getTable().getGameBoard());
+            }
+        });
     }
     private void clearTile() {
         sourceTile = null;
@@ -203,6 +208,11 @@ public class Table  {
                         "Game Over: Player " + Table.getTable().getGameBoard().getCurrentPlayer() + " is in stalemate!", "Game Over",
                         JOptionPane.INFORMATION_MESSAGE);
             }
+            if (Table.getTable().getMoveLog().isDrawByRepetition()) {
+                JOptionPane.showMessageDialog(Table.getTable().getBoardPanel(),
+                        "Game Over: Draw by repetition ", "Game Over",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
         }
 
         public GameSetup getGameSetup() {
@@ -226,7 +236,7 @@ public class Table  {
         @Override
         protected Move doInBackground() {
             //TODO change this to Alpha-Beta pruning = new AlphaBeta(...)
-            final MoveStrategy strategy = new Minimax(Table.getTable().getGameSetup().getSearchDepth());
+            final MoveStrategy strategy = new AlphaBeta(Table.getTable().getGameSetup().getSearchDepth());
             return strategy.execute(Table.getTable().getGameBoard());
         }
 
@@ -412,10 +422,6 @@ public class Table  {
 
         }
         private Collection<Move> pieceLegalMove(final Board board) {
-            //TODO only get legal move to escape check when in check
-//            if (board.getCurrentPlayer().isInCheck()) {
-//                return board.getCurrentPlayer().getEscapeMoves();
-//            }
             if (humanMovedPiece != null && humanMovedPiece.getPieceAlliance() == board.getCurrentPlayer().getAlliance()) {
                 if (humanMovedPiece.isKing()) {
                     final Collection<Move> kingLegalMoves = humanMovedPiece.getLegalMoves(board);
@@ -483,6 +489,19 @@ public class Table  {
         }
         public boolean removeMove(final Move move) {
             return moves.remove(move);
+        }
+        /*
+        Imagine move log is like this
+        a1 a2
+        b1 b2
+        c1 c2
+        a1 a2
+        b1 b2
+        c1 c2
+         */
+        public boolean isDrawByRepetition() {
+            //TODO draw by repetition
+            return false;
         }
     }
 }

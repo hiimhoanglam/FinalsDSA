@@ -16,6 +16,7 @@ public abstract class Player {
     protected final King playerKing;
     protected final boolean isInCheck;
     protected final boolean isInStalemate;
+    protected boolean kingFirstMove = true;
 
     public Player(Board board, Collection<Move> playerLegalMoves, Collection<Move> opponentMoves) {
         this.board = board;

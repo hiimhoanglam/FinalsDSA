@@ -9,7 +9,7 @@ public class Minimax implements MoveStrategy{
     int boardsEvaluated;
 
     public Minimax(final int searchDepth) {
-        this.boardEvaluator = new StandardBoardEvaluator();
+        this.boardEvaluator = StandardBoardEvaluator.getInstance();
         this.boardsEvaluated = 0;
         this.searchDepth = searchDepth;
     }
@@ -49,7 +49,7 @@ public class Minimax implements MoveStrategy{
         return bestMove;
     }
     public int min(final Board board, final int depth) {
-        if (depth == 0 || isGameOverScenario(board)) {
+        if (depth == 0 || board.isGameOverScenario()) {
             this.boardsEvaluated++;
             return this.boardEvaluator.evaluate(board,depth);
         }
@@ -66,7 +66,7 @@ public class Minimax implements MoveStrategy{
         return currentSmallestValue;
     }
     public int max(final Board board, final int depth) {
-        if (depth == 0 || isGameOverScenario(board)) {
+        if (depth == 0 || board.isGameOverScenario()) {
             this.boardsEvaluated++;
             return this.boardEvaluator.evaluate(board,depth);
         }
@@ -83,10 +83,6 @@ public class Minimax implements MoveStrategy{
         return currentHighestValue;
     }
 
-    private boolean isGameOverScenario(Board board) {
-        //TODO draw by repetition
-        return board.getCurrentPlayer().getOpponent().isInCheckMate() || board.getCurrentPlayer().getOpponent().isInStaleMate();
-    }
 
     @Override
     public String toString() {

@@ -3,7 +3,12 @@ package engine.board;
 import engine.player.BlackPlayer;
 import engine.player.Player;
 import engine.player.WhitePlayer;
-
+/*
+Show the type of player: BLACK/WHITE
+Get the direction for the white and black player
+If the white player => the white player is moving up(from 63 to 0)
+If the black player => the black player is moving down(from 0 to 63)
+ */
 public enum Alliance {
     WHITE {
         @Override

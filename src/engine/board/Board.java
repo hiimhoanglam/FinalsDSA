@@ -9,7 +9,6 @@ import engine.player.Player;
 import engine.player.WhitePlayer;
 
 import java.util.*;
-
 public class Board {
     private final List<Tile> gameBoard;
     private final Collection<Piece> whiteActivePieces;
@@ -105,6 +104,10 @@ public class Board {
         Builder builder = FenUtility.loadPosition(fen);
         builder.setMoveMaker(Alliance.WHITE);
         return builder.build();
+    }
+    public boolean isGameOverScenario() {
+        //TODO draw by repetition
+        return this.getCurrentPlayer().getOpponent().isInCheckMate() || this.getCurrentPlayer().getOpponent().isInStaleMate();
     }
 
     public Tile getTile(int coordinate) {
