@@ -1,6 +1,6 @@
 package gui;
 import engine.board.Alliance;
-import engine.player.Player;
+import engine.player.player.Player;
 import gui.Table.PlayerType;
 import javax.swing.*;
 import java.awt.*;

@@ -1,4 +1,4 @@
-package engine.player;
+package engine.player.player;
 
 import engine.board.*;
 import engine.piece.King;
@@ -16,7 +16,6 @@ public abstract class Player {
     protected final King playerKing;
     protected final boolean isInCheck;
     protected final boolean isInStalemate;
-    protected boolean kingFirstMove = true;
 
     public Player(Board board, Collection<Move> playerLegalMoves, Collection<Move> opponentMoves) {
         this.board = board;
@@ -63,6 +62,9 @@ public abstract class Player {
             }
         }
         throw new RuntimeException("Impossible to achieve");
+    }
+    public MoveTransition unMakeMove(final Move move) {
+        return new MoveTransition(move.undo(), move, MoveStatus.DONE);
     }
     public abstract Collection<Piece> getActivePieces();
     public abstract Alliance getAlliance();

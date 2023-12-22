@@ -1,11 +1,9 @@
 package engine.piece;
 
 import engine.board.*;
-import engine.player.Player;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 public class King extends Piece{

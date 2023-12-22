@@ -17,10 +17,66 @@ public class BoardUtils {
     public static final boolean[] THIRD_RANK = initRow(5);
     public static final boolean[] SECOND_RANK = initRow(6);
     public static final boolean[] FIRST_RANK = initRow(7);
+    public static final int[] pawnPositionBonus = {
+            100, 100, 100, 100, 100, 100, 100, 100,
+            25, 50, 50, 50, 50, 50, 50, 25,
+            0, 50, 50, 50, 50, 50, 50, 0,
+            0,  0, 10, 300, 300, 10,  0,  0,
+            0,  0, 10, 300, 300, 10,  0,  0,
+            0, 0, 50, 50, 50, 50, 0,  0,
+            25, 50, 50, 50, 50, 50, 50, 25,
+            100, 100, 100, 100, 100, 100, 100, 100};
+    public static final int[] knightPositionBonus = {
+            -50,-40,-30,-30,-30,-30,-40,-50,
+            -40,-20,  0,  0,  0,  0,-20,-40,
+            -30,  0, 10, 15, 15, 10,  0,-30,
+            -30,  5, 15, 20, 20, 15,  5,-30,
+            -30,  0, 15, 20, 20, 15,  0,-30,
+            -30,  5, 10, 15, 15, 10,  5,-30,
+            -40,-20,  0,  5,  5,  0,-20,-40,
+            -50,-40,-30,-30,-30,-30,-40,-50,};
+    public static final int[] bishopPositionBonus = {
+            -20,-10,-10,-10,-10,-10,-10,-20,
+            -10,  0,  0,  0,  0,  0,  0,-10,
+            -10,  0,  5, 10, 10,  5,  0,-10,
+            -10,  5,  5, 10, 10,  5,  5,-10,
+            -10,  0, 10, 10, 10, 10,  0,-10,
+            -10, 10, 10, 10, 10, 10, 10,-10,
+            -10,  5,  0,  0,  0,  0,  5,-10,
+            -20,-10,-10,-10,-10,-10,-10,-20};
+    public static final int[] rookPositionBonus = {
+            0,  0,  0,  0,  0,  0,  0,  0,
+            5, 10, 10, 10, 10, 10, 10,  5,
+            -5,  0,  0,  0,  0,  0,  0, -5,
+            -5,  0,  0,  0,  0,  0,  0, -5,
+            -5,  0,  0,  0,  0,  0,  0, -5,
+            -5,  0,  0,  0,  0,  0,  0, -5,
+            -5,  0,  0,  0,  0,  0,  0, -5,
+            0,  0,  0,  5,  5,  0,  0,  0};
+    public static final int[] queenPositionBonus = {
+            -20,-10,-10, -5, -5,-10,-10,-20,
+            -10,  0,  0,  0,  0,  0,  0,-10,
+            -10,  0,  5,  5,  5,  5,  0,-10,
+            -5,  0,  5,  5,  5,  5,  0, -5,
+            0,  0,  5,  5,  5,  5,  0, -5,
+            -10,  5,  5,  5,  5,  5,  0,-10,
+            -10,  0,  5,  0,  0,  0,  0,-10,
+            -20,-10,-10, -5, -5,-10,-10,-20
+    };
+    public static final int[] kingPositionBonus = {
+             20, 20,  30,  0,  0,  0, 20, 20,
+             20, 30, 0,  0,  0, 0, 30, 20
+            -30,-40,-40,-50,-50,-40,-40,-30,
+            -30,-40,-40,-50,-50,-40,-40,-30,
+            -20,-30,-30,-40,-40,-30,-30,-20,
+            -10,-20,-20,-20,-20,-20,-20,-10,
+            20, 20,  0,  0,  0,  0, 20, 20,
+            20, 30, 30,  0,  0, 0, 30, 20
+    };
     /*
-    Algebraic notation means a8 corresponds to 0,b8 corresponds to 1, etc...
-    For each algebraic notation, there is a position that corresponds. For example, h1 corresponds to 63
-     */
+   Algebraic notation means a8 corresponds to 0,b8 corresponds to 1, etc...
+   For each algebraic notation, there is a position that corresponds. For example, h1 corresponds to 63
+    */
     public static final List<String> ALGEBRAIC_NOTATION = initializeAlgebraicNotation();
     public static final Map<String,Integer> POSITION_TO_COORDINATE = initializePositionToCoordinateMap();
     private BoardUtils() {

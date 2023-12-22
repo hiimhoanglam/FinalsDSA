@@ -65,6 +65,12 @@ public abstract class Move {
         builder.setMoveMaker(this.board.getCurrentPlayer().getOpponent().getAlliance());
         return builder.build();
     }
+    public Board undo() {
+        final Builder builder = new Builder();
+        this.board.getAllPieces().forEach(builder::setPiece);
+        builder.setMoveMaker(this.board.getCurrentPlayer().getAlliance());
+        return builder.build();
+    }
 
     @Override
     public boolean equals(Object o) {

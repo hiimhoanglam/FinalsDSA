@@ -45,7 +45,7 @@ public class Table  {
     private Move computerMove;
 
     private Table() {
-        this.gameBoard = Board.initBoard("r3k2r/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/R3K2R w KQkq - 0 1");
+        this.gameBoard = Board.initBoard();
 //        this.chessBoard = Board.initBoard("r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w KQkq - 0 1");
         this.boardDirection = BoardDirection.NORMAL;
         this.boardPanel = new BoardPanel();
@@ -171,16 +171,49 @@ public class Table  {
         return preferences;
     }
     private JMenu createOptionsMenu() {
-        final JMenu options = new JMenu("Options");
-        options.setMnemonic(KeyEvent.VK_0);
+        final JMenu optionsMenu = new JMenu("Options");
+        optionsMenu.setMnemonic(KeyEvent.VK_0);
         final JMenuItem setupGameMenuItem = new JMenuItem("Setup Game", KeyEvent.VK_S);
         setupGameMenuItem.addActionListener(e -> {
             Table.getTable().getGameSetup().promptUser();
             Table.getTable().setupUpdate(Table.getTable().getGameSetup());
         });
-        options.add(setupGameMenuItem);
-        return options;
+        final JMenuItem undoMoveMenuItem = new JMenuItem("Undo last move", KeyEvent.VK_M);
+        undoMoveMenuItem.addActionListener(e -> {
+            if(Table.getTable().getMoveLog().size() > 0) {
+                undoLastMove();
+            }
+        });
+        final JMenuItem resetMenuItem = new JMenuItem("New Game", KeyEvent.VK_P);
+        resetMenuItem.addActionListener(e -> undoAllMoves());
+        optionsMenu.add(resetMenuItem);
+        optionsMenu.add(undoMoveMenuItem);
+        optionsMenu.add(setupGameMenuItem);
+        return optionsMenu;
     }
+
+    private void undoAllMoves() {
+        for(int i = Table.getTable().getMoveLog().size() - 1; i >= 0; i--) {
+            final Move lastMove = Table.getTable().getMoveLog().removeMove(Table.getTable().getMoveLog().size() - 1);
+            this.gameBoard = this.gameBoard.getCurrentPlayer().unMakeMove(lastMove).getBoard();
+        }
+        this.computerMove = null;
+        Table.getTable().getMoveLog().clear();
+        Table.getTable().getGameHistoryPanel().redo(gameBoard, Table.getTable().getMoveLog());
+        Table.getTable().getTakenPiecesPanel().redo(Table.getTable().getMoveLog());
+        Table.getTable().getBoardPanel().drawBoard(gameBoard);
+    }
+
+    private void undoLastMove() {
+        final Move lastMove = Table.getTable().getMoveLog().removeMove(Table.getTable().getMoveLog().size() - 1);
+        this.gameBoard = this.gameBoard.getCurrentPlayer().unMakeMove(lastMove).getBoard();
+        this.computerMove = null;
+        Table.getTable().getMoveLog().removeMove(lastMove);
+        Table.getTable().getGameHistoryPanel().redo(getGameBoard(), Table.getTable().getMoveLog());
+        Table.getTable().getTakenPiecesPanel().redo(Table.getTable().getMoveLog());
+        Table.getTable().getBoardPanel().drawBoard(gameBoard);
+    }
+
     private void setupUpdate(final GameSetup gameSetup) {
         support.firePropertyChange("GameSetup update",Table.getTable().getGameSetup(),gameSetup);
     }

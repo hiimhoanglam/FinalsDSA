@@ -73,11 +73,11 @@ public abstract class Piece{
 
     public enum PieceType {
         QUEEN("Q",900),
-        BISHOP("B",500),
-        ROOK("R",700),
+        BISHOP("B",300),
+        ROOK("R",500),
         KING("K",1000),
-        PAWN("P",200),
-        KNIGHT("N",500);
+        PAWN("P",100),
+        KNIGHT("N",350);
         private final String pieceType;
         private final int pieceValue;
         PieceType(final String pieceType, final int pieceValue) {

@@ -4,11 +4,9 @@ import engine.board.Alliance;
 import engine.board.Board;
 import engine.board.Move;
 import engine.board.MoveTransition;
-import engine.player.Player;
+import engine.player.player.Player;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class AlphaBeta implements MoveStrategy{

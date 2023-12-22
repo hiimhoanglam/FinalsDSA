@@ -1,15 +1,13 @@
-package engine.player;
+package engine.player.player;
 
 import engine.board.Alliance;
 import engine.board.Board;
-import engine.board.BoardUtils;
 import engine.board.Move;
 import engine.piece.Piece;
 import engine.piece.Rook;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 
 public class BlackPlayer extends Player{
     public BlackPlayer(final Board board, final Collection<Move> whiteLegalMoves, final Collection<Move> blackLegalMoves) {
@@ -20,7 +18,7 @@ public class BlackPlayer extends Player{
         final int rookShort = 7;
         final int rookLong = 0;
         final Collection<Move> legalCastle = new ArrayList<>();
-        if (this.kingFirstMove  && !this.isInCheck) {
+        if (this.board.isBlackKingFirstMoveCheck()  && !this.isInCheck) {
             /*King side castle*/
             if (this.board.getTile(rookShort).isOccupied() && this.board.getTile(rookShort).getPiece().getPieceType() == Piece.PieceType.ROOK
                     && this.board.getTile(rookShort).getPiece().firstMoveCheck.isFirstMove()) {

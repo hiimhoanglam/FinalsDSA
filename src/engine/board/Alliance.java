@@ -1,8 +1,8 @@
 package engine.board;
 
-import engine.player.BlackPlayer;
-import engine.player.Player;
-import engine.player.WhitePlayer;
+import engine.player.player.BlackPlayer;
+import engine.player.player.Player;
+import engine.player.player.WhitePlayer;
 /*
 Show the type of player: BLACK/WHITE
 Get the direction for the white and black player

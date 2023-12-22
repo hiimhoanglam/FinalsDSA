@@ -1,12 +1,11 @@
 package engine.board;
 
 
-import engine.board.Alliance;
 import engine.piece.Pawn;
 import engine.piece.Piece;
-import engine.player.BlackPlayer;
-import engine.player.Player;
-import engine.player.WhitePlayer;
+import engine.player.player.BlackPlayer;
+import engine.player.player.Player;
+import engine.player.player.WhitePlayer;
 
 import java.util.*;
 public class Board {
@@ -17,6 +16,8 @@ public class Board {
     private final BlackPlayer blackPlayer;
     private final Pawn enPassantPawn;
     private final Player currentPlayer;
+    private static boolean whiteKingFirstMoveCheck = true;
+    private static boolean blackKingFirstMoveCheck = true;
 
     private Board(final Builder builder) {
         this.gameBoard = createGameBoard(builder);
@@ -27,7 +28,22 @@ public class Board {
         Collection<Move> blackLegalMoves = getLegalMoves(this.blackActivePieces);
         this.whitePlayer = new WhitePlayer(this,whiteLegalMoves,blackLegalMoves);
         this.blackPlayer = new BlackPlayer(this,whiteLegalMoves,blackLegalMoves);
+        setKingFirstMoveCheck();
         this.currentPlayer = builder.nextMoveMaker().choosePlayer(this.whitePlayer,this.blackPlayer);
+    }
+    public void setKingFirstMoveCheck() {
+        if (this.whitePlayer.getPlayerKing().getPiecePosition() != 60) {
+            whiteKingFirstMoveCheck = false;
+        }
+        if (this.blackPlayer.getPlayerKing().getPiecePosition() != 4) {
+            blackKingFirstMoveCheck = false;
+        }
+    }
+    public boolean isWhiteKingFirstMove() {
+        return whiteKingFirstMoveCheck;
+    }
+    public boolean isBlackKingFirstMoveCheck() {
+        return blackKingFirstMoveCheck;
     }
 
     public Collection<Piece> getAllPieces() {
