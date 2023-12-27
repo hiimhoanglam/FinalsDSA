@@ -69,6 +69,9 @@ public class TakenPiecesPanel extends JPanel {
         final List<Piece> whiteAttackedPiece = new ArrayList<>();
         final List<Piece> blackAttackedPiece = new ArrayList<>();
         for (final Move move: moveLog.getMoves()) {
+            if (move == null) {
+                break;
+            }
             if (move.isAttack()) {
                 final Piece attackedPiece = move.getAttackedPiece();
                 if (attackedPiece.getPieceAlliance() == Alliance.WHITE) {

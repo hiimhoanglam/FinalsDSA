@@ -18,6 +18,7 @@ public class Board {
     private final Player currentPlayer;
     private static boolean whiteKingFirstMoveCheck = true;
     private static boolean blackKingFirstMoveCheck = true;
+    private static int moveCounter = 0;
 
     private Board(final Builder builder) {
         this.gameBoard = createGameBoard(builder);
@@ -30,6 +31,7 @@ public class Board {
         this.blackPlayer = new BlackPlayer(this,whiteLegalMoves,blackLegalMoves);
         setKingFirstMoveCheck();
         this.currentPlayer = builder.nextMoveMaker().choosePlayer(this.whitePlayer,this.blackPlayer);
+        moveCounter++;
     }
     public void setKingFirstMoveCheck() {
         if (this.whitePlayer.getPlayerKing().getPiecePosition() != 60) {
@@ -125,9 +127,13 @@ public class Board {
         builder.setMoveMaker(Alliance.WHITE);
         return builder.build();
     }
+    public static boolean isFiftyMove() {
+        return moveCounter >= 100;
+    }
     public boolean isGameOverScenario() {
         //TODO draw by repetition
-        return this.getCurrentPlayer().getOpponent().isInCheckMate() || this.getCurrentPlayer().getOpponent().isInStaleMate();
+        return this.getCurrentPlayer().getOpponent().isInCheckMate() || this.getCurrentPlayer().getOpponent().isInStaleMate()
+                || isFiftyMove();
     }
 
     public Tile getTile(int coordinate) {

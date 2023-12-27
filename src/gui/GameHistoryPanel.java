@@ -40,6 +40,9 @@ public class GameHistoryPanel extends JPanel {
         int currentRow = 0;
         this.dataModel.clear();
         for (final Move move: moveHistory.getMoves()) {
+            if (move == null) {
+                break;
+            }
             final String moveText = move.toString();
             if (move.getMovedPiece().getPieceAlliance() == Alliance.WHITE) {
                 this.dataModel.setValueAt(moveText,currentRow,0);
@@ -51,12 +54,14 @@ public class GameHistoryPanel extends JPanel {
         }
         if (moveHistory.getMoves().size() > 0) {
             final Move lastMove = moveHistory.getMoves().get(moveHistory.getMoves().size() - 1);
-            final String lastMoveText = lastMove.toString();
-            if (lastMove.getMovedPiece().getPieceAlliance() == Alliance.WHITE) {
-                this.dataModel.setValueAt(lastMoveText + calculateCheckmateAndCheckHash(board),currentRow,0);
-            }
-            else if (lastMove.getMovedPiece().getPieceAlliance() == Alliance.BLACK) {
-                this.dataModel.setValueAt(lastMoveText + calculateCheckmateAndCheckHash(board),currentRow - 1,1);
+            if (lastMove != null) {
+                final String lastMoveText = lastMove.toString();
+                if (lastMove.getMovedPiece().getPieceAlliance() == Alliance.WHITE) {
+                    this.dataModel.setValueAt(lastMoveText + calculateCheckmateAndCheckHash(board),currentRow,0);
+                }
+                else if (lastMove.getMovedPiece().getPieceAlliance() == Alliance.BLACK) {
+                    this.dataModel.setValueAt(lastMoveText + calculateCheckmateAndCheckHash(board),currentRow - 1,1);
+                }
             }
         }
         final JScrollBar scrollBar = scrollPane.getVerticalScrollBar();

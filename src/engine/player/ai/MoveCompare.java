@@ -59,12 +59,10 @@ public class MoveCompare implements Comparator<Move> {
     public int compare(Move o1, Move o2) {
         if (o1.getBoard().getCurrentPlayer().isInCheck() != o2.getBoard().getCurrentPlayer().isInCheck()) {
             return Boolean.compare(o1.getBoard().getCurrentPlayer().isInCheck(), o2.getBoard().getCurrentPlayer().isInCheck());
-        } else if (o1.isAttack() != o2.isAttack()) {
-            return Boolean.compare(o1.isAttack(), o2.isAttack()); }
-//        } else if (o1.isCastlingMove() != o2.isCastlingMove()) {
-            return Boolean.compare(o1.isCastlingMove(), o2.isCastlingMove());
-//        } else {
-//            return Integer.compare(o2.getMovedPiece().getPieceValue(), o1.getMovedPiece().getPieceValue());
-//        }
+        }
+        else if (o1.isAttack() != o2.isAttack()) {
+            return Boolean.compare(o1.isAttack(), o2.isAttack());
+        }
+        return Boolean.compare(o1.isCastlingMove(), o2.isCastlingMove());
     }
 }

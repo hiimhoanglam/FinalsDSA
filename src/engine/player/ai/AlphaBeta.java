@@ -59,9 +59,7 @@ public class AlphaBeta implements MoveStrategy{
                 else if (!alliance.isWhite() && currentValue < lowestSeenValue) {
                     lowestSeenValue = currentValue;
                     bestMove = move;
-
                 }
-
             }
         }
         final long runTime = System.currentTimeMillis() - startTime;
@@ -82,7 +80,8 @@ public class AlphaBeta implements MoveStrategy{
         for (final Move move : sortedMoves) {
             final MoveTransition moveTransition = board.getCurrentPlayer().makeMove(move);
             if (moveTransition.getMoveStatus().isDone()) {
-                currentHighest = Math.max(currentHighest, min(moveTransition.getBoard(), depth - 1, currentHighest, lowest));
+                currentHighest = Math.max(currentHighest,
+                        min(moveTransition.getBoard(), depth - 1, currentHighest, lowest));
                 if (lowest <= currentHighest) {
                     break;
                 }
@@ -105,7 +104,8 @@ public class AlphaBeta implements MoveStrategy{
         for (final Move move : sortedMoves) {
             final MoveTransition moveTransition = board.getCurrentPlayer().makeMove(move);
             if (moveTransition.getMoveStatus().isDone()) {
-                currentLowest = Math.min(currentLowest, max(moveTransition.getBoard(), depth -1 , highest, currentLowest));
+                currentLowest = Math.min(currentLowest,
+                        max(moveTransition.getBoard(), depth -1 , highest, currentLowest));
                 if (currentLowest <= highest) {
                     break;
                 }

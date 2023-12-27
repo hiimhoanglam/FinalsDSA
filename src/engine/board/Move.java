@@ -215,7 +215,16 @@ public abstract class Move {
 
         @Override
         public String toString() {
-            return "promo";
+            StringBuilder string = new StringBuilder();
+            string.append(BoardUtils.getPositionAtCoordinate(targetCoordinate));
+            string.append("=Q");
+            if (execute().getCurrentPlayer().getOpponent().isInCheckMate()) {
+                string.append("#");
+            }
+            if (execute().getCurrentPlayer().getOpponent().isInCheck()) {
+                string.append("+");
+            }
+            return string.toString();
         }
     }
     public static final class PawnMove extends Move {
