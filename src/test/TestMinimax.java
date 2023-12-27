@@ -62,12 +62,5 @@ public class TestMinimax {
         final long numBoardsEvaluated = minMax.getNumBoardsEvaluated();
         assertEquals(numBoardsEvaluated, 119060324L);
     }
-//    @Test
-//    public void testPosition5() {
-//        final Board board = Board.initBoard("rnbq1k1r/pp1Pbppp/2p5/8/2B5/8/PPP1NnPP/RNBQK2R w KQ - 1 8");
-//        final MoveStrategy minMax = new Minimax(1);
-//        minMax.execute(board);
-//        final long numBoardsEvaluated = minMax.getNumBoardsEvaluated();
-//        assertEquals(numBoardsEvaluated, 44L);
-//    }
 }
+

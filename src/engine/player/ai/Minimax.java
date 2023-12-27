@@ -62,6 +62,7 @@ public class Minimax implements MoveStrategy{
                     currentSmallestValue = currentValue;
                 }
             }
+            board.resetKingFirstMove();
         }
         return currentSmallestValue;
     }
@@ -79,6 +80,7 @@ public class Minimax implements MoveStrategy{
                     currentHighestValue = currentValue;
                 }
             }
+            board.resetKingFirstMove();
         }
         return currentHighestValue;
     }

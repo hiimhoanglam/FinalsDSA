@@ -12,8 +12,8 @@ public class Board {
     private final List<Tile> gameBoard;
     private final Collection<Piece> whiteActivePieces;
     private final Collection<Piece> blackActivePieces;
-    private final WhitePlayer whitePlayer;
-    private final BlackPlayer blackPlayer;
+    protected final WhitePlayer whitePlayer;
+    protected final BlackPlayer blackPlayer;
     private final Pawn enPassantPawn;
     private final Player currentPlayer;
     private static boolean whiteKingFirstMoveCheck = true;
@@ -44,6 +44,10 @@ public class Board {
     }
     public boolean isBlackKingFirstMoveCheck() {
         return blackKingFirstMoveCheck;
+    }
+    public void resetKingFirstMove() {
+        whiteKingFirstMoveCheck = true;
+        blackKingFirstMoveCheck = true;
     }
 
     public Collection<Piece> getAllPieces() {
@@ -178,4 +182,5 @@ public class Board {
             return new Board(this);
         }
     }
+    
 }

@@ -1,10 +1,13 @@
 package engine.player.ai;
 
+import engine.board.Alliance;
 import engine.board.Board;
 import engine.board.BoardUtils;
 import engine.board.Move;
 import engine.piece.Piece;
 import engine.player.player.Player;
+
+import java.util.Objects;
 
 public class StandardBoardEvaluator implements BoardEvaluator {
     private static volatile StandardBoardEvaluator instance;
@@ -40,6 +43,8 @@ public class StandardBoardEvaluator implements BoardEvaluator {
                 + attacks(player) + kingThreats(player,depth);
 
     }
+    //TODO pinned pieces
+    //TODO pawn structure
 
     private int mobility(Player player) {
         return player.getLegalMoves().size();
@@ -85,7 +90,10 @@ public class StandardBoardEvaluator implements BoardEvaluator {
         return score;
     }
     private int piecePositionBonus(final Piece piece) {
-        final int piecePosition = piece.getPiecePosition();
+        int piecePosition = piece.getPiecePosition();
+        if (!piece.getPieceAlliance().isWhite()) {
+            piecePosition = (piecePosition + 56) - (piecePosition / 8) * 16;
+        }
         switch (piece.getPieceType()) {
             case KING -> {
                 return BoardUtils.kingPositionBonus[piecePosition];

@@ -3,7 +3,6 @@ import engine.board.*;
 import engine.piece.Piece;
 import engine.board.MoveTransition;
 import engine.player.ai.AlphaBeta;
-import engine.player.ai.Minimax;
 import engine.player.ai.MoveStrategy;
 
 import java.awt.event.*;
@@ -43,10 +42,10 @@ public class Table  {
     private final BoardPanel boardPanel;
     private boolean highlightLegal;
     private Move computerMove;
+    private String fenString = FenUtility.startFen;
 
     private Table() {
-        this.gameBoard = Board.initBoard();
-//        this.chessBoard = Board.initBoard("r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w KQkq - 0 1");
+        this.gameBoard = Board.initBoard(fenString);
         this.boardDirection = BoardDirection.NORMAL;
         this.boardPanel = new BoardPanel();
         this.gameHistoryPanel = new GameHistoryPanel();
@@ -119,14 +118,12 @@ public class Table  {
     }
 
     public void show() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                Table.getTable().getMoveLog().clear();
-                Table.getTable().getGameHistoryPanel().redo(gameBoard, Table.getTable().getMoveLog());
-                Table.getTable().getTakenPiecesPanel().redo(Table.getTable().getMoveLog());
-                Table.getTable().getBoardPanel().drawBoard(Table.getTable().getGameBoard());
-            }
+        SwingUtilities.invokeLater(() -> {
+            Table.getTable().gameBoard = Board.initBoard(fenString);
+            Table.getTable().getMoveLog().clear();
+            Table.getTable().getGameHistoryPanel().redo(gameBoard, Table.getTable().getMoveLog());
+            Table.getTable().getTakenPiecesPanel().redo(Table.getTable().getMoveLog());
+            Table.getTable().getBoardPanel().drawBoard(Table.getTable().getGameBoard());
         });
     }
     private void clearTile() {
@@ -145,7 +142,23 @@ public class Table  {
         final JMenuItem pgn = new JMenuItem("Load PGN");
         pgn.addActionListener(e -> System.out.println("Loading PGN file"));
         final JMenuItem fen = new JMenuItem("Load FEN");
-        fen.addActionListener(e -> System.out.println("Loading FEN file"));
+        fen.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JTextField textField = new JTextField();
+                textField.setEnabled(true);
+                textField.setBounds(0,0,300,25);
+                gameFrame.add(textField);
+                textField.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        fenString = textField.getText();
+                        textField.setEnabled(false);
+                        show();
+                    }
+                });
+            }
+        });
         final JMenuItem exit = new JMenuItem("Exit");
         exit.addActionListener(e -> System.exit(0));
         menu.add(pgn);
@@ -156,12 +169,9 @@ public class Table  {
     private JMenu createPreferencesMenu() {
         final JMenu preferences = new JMenu("Preferences");
         final JMenuItem flip = new JMenuItem("Flip board");
-        flip.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                boardDirection = boardDirection.getOpposite();
-                boardPanel.drawBoard(gameBoard);
-            }
+        flip.addActionListener(e -> {
+            boardDirection = boardDirection.getOpposite();
+            boardPanel.drawBoard(gameBoard);
         });
         preferences.add(flip);
         preferences.addSeparator();
@@ -268,7 +278,6 @@ public class Table  {
 
         @Override
         protected Move doInBackground() {
-            //TODO change this to Alpha-Beta pruning = new AlphaBeta(...)
             final MoveStrategy strategy = new AlphaBeta(Table.getTable().getGameSetup().getSearchDepth());
             return strategy.execute(Table.getTable().getGameBoard());
         }
@@ -396,16 +405,13 @@ public class Table  {
                             clearTile();
                         }
                     }
-                    SwingUtilities.invokeLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            gameHistoryPanel.redo(gameBoard,moveLog);
-                            takenPiecesPanel.redo(moveLog);
-                            if (gameSetup.isAIPlayer(gameBoard.getCurrentPlayer())) {
-                                moveMadeUpdate(PlayerType.HUMAN);
-                            }
-                            boardPanel.drawBoard(gameBoard);
+                    SwingUtilities.invokeLater(() -> {
+                        gameHistoryPanel.redo(gameBoard,moveLog);
+                        takenPiecesPanel.redo(moveLog);
+                        if (gameSetup.isAIPlayer(gameBoard.getCurrentPlayer())) {
+                            moveMadeUpdate(PlayerType.HUMAN);
                         }
+                        boardPanel.drawBoard(gameBoard);
                     });
                 }
 

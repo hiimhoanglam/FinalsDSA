@@ -87,6 +87,7 @@ public class AlphaBeta implements MoveStrategy{
                     break;
                 }
             }
+            board.resetKingFirstMove();
         }
         return currentHighest;
     }
@@ -109,6 +110,7 @@ public class AlphaBeta implements MoveStrategy{
                     break;
                 }
             }
+            board.resetKingFirstMove();
         }
         return currentLowest;
     }
