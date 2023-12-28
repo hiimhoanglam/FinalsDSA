@@ -7,6 +7,7 @@ Bui Quang Viet\
 Thieu Van Long\
 
 #Demo
+![image](https://github.com/hiimhoanglam/FinalsDSA/assets/110579854/beb9eb20-5c41-4cd7-b1bf-ce98221e7175)
 
 #Instructions
 1.Cài đặt các file thông tin ảnh ở thư mục "Piece":\
