@@ -1,5 +1,5 @@
-# **FinalsDSA**
-Finals Projects Chess for DSA\
+# **Chess projects**
+Finals Projects Chess for Data Structures and Algorithms\
 Group members:\
 Hoang Thiet Lam - Lead\
 Nguyen Dang Thuc\
