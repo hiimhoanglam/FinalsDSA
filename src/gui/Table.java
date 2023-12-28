@@ -27,9 +27,9 @@ public class Table  {
     private final TakenPiecesPanel takenPiecesPanel;
     private final GameSetup gameSetup;
 
-    private static final Dimension OUTER_FRAME = new Dimension(600,600);
-    private static final Dimension BOARD_PANEL_DIMENSION = new Dimension(500,500);
-    private static final Dimension TILE_PANEL_DIMENSION = new Dimension(10,10);
+    private static final Dimension OUTER_FRAME = new Dimension(800,800);
+    private static final Dimension BOARD_PANEL_DIMENSION = new Dimension(800,800);
+    private static final Dimension TILE_PANEL_DIMENSION = new Dimension(30,30);
     private static final String FILE_ICON_PATH = "D:\\chesspieces\\";
     private static final Color lightColor = new Color(177, 228, 185);
     private static final Color darkColor = new Color(112, 162, 163);
@@ -217,6 +217,7 @@ public class Table  {
     private void undoLastMove() {
         final Move lastMove = Table.getTable().getMoveLog().removeMove(Table.getTable().getMoveLog().size() - 1);
         this.gameBoard = this.gameBoard.getCurrentPlayer().unMakeMove(lastMove).getBoard();
+        Board.moveCounter--;
         this.computerMove = null;
         Table.getTable().getMoveLog().removeMove(lastMove);
         Table.getTable().getGameHistoryPanel().redo(getGameBoard(), Table.getTable().getMoveLog());
@@ -235,26 +236,29 @@ public class Table  {
         private PlayerType playerType;
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            if (Table.getTable().getGameSetup().isAIPlayer(Table.getTable().getGameBoard().getCurrentPlayer())
-            && !Table.getTable().getGameBoard().getCurrentPlayer().isInCheckMate()
-            && !Table.getTable().getGameBoard().getCurrentPlayer().isInStaleMate()) {
-                final AIThinkTank aiThinkTank = new AIThinkTank();
-                aiThinkTank.execute();
-            }
             if (Table.getTable().getGameBoard().getCurrentPlayer().isInCheckMate()) {
                 JOptionPane.showMessageDialog(Table.getTable().getBoardPanel(),
                         "Game Over: Player " + Table.getTable().getGameBoard().getCurrentPlayer() + " is in checkmate!", "Game Over",
                         JOptionPane.INFORMATION_MESSAGE);
             }
-            if (Table.getTable().getGameBoard().getCurrentPlayer().isInStaleMate()) {
+            else if (Table.getTable().getGameBoard().getCurrentPlayer().isInStaleMate()) {
                 JOptionPane.showMessageDialog(Table.getTable().getBoardPanel(),
                         "Game Over: Player " + Table.getTable().getGameBoard().getCurrentPlayer() + " is in stalemate!", "Game Over",
                         JOptionPane.INFORMATION_MESSAGE);
             }
-            if (Table.getTable().getMoveLog().isDrawByRepetition()) {
+            else if (Board.isFiftyMove()) {
                 JOptionPane.showMessageDialog(Table.getTable().getBoardPanel(),
-                        "Game Over: Draw by repetition ", "Game Over",
+                        "Game Over: Draw by fifty move counter ", "Game Over",
                         JOptionPane.INFORMATION_MESSAGE);
+
+            }
+            else {
+                if (Table.getTable().getGameSetup().isAIPlayer(Table.getTable().getGameBoard().getCurrentPlayer())
+                        && !Table.getTable().getGameBoard().getCurrentPlayer().isInCheckMate()
+                        && !Table.getTable().getGameBoard().getCurrentPlayer().isInStaleMate()) {
+                    final AIThinkTank aiThinkTank = new AIThinkTank();
+                    aiThinkTank.execute();
+                }
             }
         }
 
@@ -290,6 +294,7 @@ public class Table  {
                 Table.getTable().getMoveLog().addMoves(bestMove);
                 Table.getTable().updateComputerMove(bestMove);
                 Table.getTable().updateGameBoard(Table.getTable().getGameBoard().getCurrentPlayer().makeMove(bestMove).getBoard());
+                Board.moveCounter++;
                 Table.getTable().getGameHistoryPanel().redo(Table.getTable().getGameBoard(),Table.getTable().getMoveLog());
                 Table.getTable().getTakenPiecesPanel().redo(Table.getTable().getMoveLog());
                 Table.getTable().getBoardPanel().drawBoard(Table.getTable().getGameBoard());
@@ -400,6 +405,7 @@ public class Table  {
                             final MoveTransition moveTransition = gameBoard.getCurrentPlayer().makeMove(move);
                             if (moveTransition.getMoveStatus().isDone()) {
                                 gameBoard = moveTransition.getBoard();
+                                Board.moveCounter++;
                                 moveLog.addMoves(move);
                             }
                             clearTile();
@@ -529,15 +535,6 @@ public class Table  {
         public boolean removeMove(final Move move) {
             return moves.remove(move);
         }
-        /*
-        Imagine move log is like this
-        a1 a2
-        b1 b2
-        c1 c2
-        a1 a2
-        b1 b2
-        c1 c2
-         */
         public boolean isDrawByRepetition() {
             //TODO draw by repetition
             return false;

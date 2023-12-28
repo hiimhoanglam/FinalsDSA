@@ -18,7 +18,7 @@ public class Board {
     private final Player currentPlayer;
     private static boolean whiteKingFirstMoveCheck = true;
     private static boolean blackKingFirstMoveCheck = true;
-    private static int moveCounter = 0;
+    public static int moveCounter = 0;
 
     private Board(final Builder builder) {
         this.gameBoard = createGameBoard(builder);
@@ -31,7 +31,6 @@ public class Board {
         this.blackPlayer = new BlackPlayer(this,whiteLegalMoves,blackLegalMoves);
         setKingFirstMoveCheck();
         this.currentPlayer = builder.nextMoveMaker().choosePlayer(this.whitePlayer,this.blackPlayer);
-        moveCounter++;
     }
     public void setKingFirstMoveCheck() {
         if (this.whitePlayer.getPlayerKing().getPiecePosition() != 60) {

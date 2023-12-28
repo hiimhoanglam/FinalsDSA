@@ -9,6 +9,8 @@ import engine.player.player.Player;
 
 import java.util.Objects;
 
+import static engine.piece.Piece.PieceType.PAWN;
+
 public class StandardBoardEvaluator implements BoardEvaluator {
     private static volatile StandardBoardEvaluator instance;
     private static final int CASTLE_BONUS = 150;
@@ -60,7 +62,7 @@ public class StandardBoardEvaluator implements BoardEvaluator {
                 final Piece movedPiece = move.getMovedPiece();
                 final Piece attackedPiece = move.getAttackedPiece();
                 if (movedPiece.getPieceValue() <= attackedPiece.getPieceValue()) {
-                    attackScore++;
+                    attackScore *= 1.5;
                 }
             }
         }
