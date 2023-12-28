@@ -4,7 +4,7 @@ Group members:\
 Hoang Thiet Lam - Lead\
 Nguyen Dang Thuc\
 Bui Quang Viet\
-Thieu Van Long\
+Thieu Van Long
 
 # **Demo**
 \
