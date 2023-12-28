@@ -9,7 +9,6 @@ Thieu Van Long
 # **Demo**
 \
 ![image](https://github.com/hiimhoanglam/FinalsDSA/assets/110579854/beb9eb20-5c41-4cd7-b1bf-ce98221e7175)
-\
 # **Instructions**
 - Cài đặt các file thông tin ảnh ở thư mục "Piece":
   + Sao chép và gán đường link dẫn trong máy cho "FILE_ICON_PATH" trong class Table(Dòng 33):{ Lưu ý : Đây là ví dụ định dạng tương tự "D:\\chesspieces\\" }
