@@ -5,3 +5,18 @@ Hoang Thiet Lam - Lead\
 Nguyen Dang Thuc\
 Bui Quang Viet\
 Thieu Van Long
+1.Cài đặt các file thông tin ảnh ở thư mục "Piece"  :
+2.Sao chép và gán đường link dẫn trong máy cho "FILE_ICON_PATH"  trong class Table( Dòng 33 ) :
+{ Lưu ý : Đây là ví dụ định dạng tương tự "D:\\chesspieces\\" }
+3.Cài đặt các file thông tin ảnh "green_dot.png" :
+4.Sao chép và gán đường link dẫn trong máy cho biến File trong class Table( Dòng 434 ) :
+{Lưu ý : Đây là ví dụ định dạng tương tự "D:\\DSA\\green_dot.png" }
+6.Import các thư viện cần dùng trong các class :
+7.Thực hiện tahy đổi thuật toán thành MinMax hoặc AlphaBeta ở phương thức " doInBackground() " class "AIThinkTank" bên trong Table
+8.Chạy trường trình Main
+Với các tính năng :
+        +Nút Preferences để hiển thị highlight Legal Move
+        +Nút Options :Để chọn các tính năng
+             New Game : Thực hiện trò chơi mới.
+             Undo : Trở về nước đi trước đó
+             Setup game : Chỉnh sửa thể loại chơi và độ sâu của thuật toán MinMax( hoặc Alpha-Beta) ( Khuyến nghị 3 với MinMAx và 4 với Alpha-Beta);
