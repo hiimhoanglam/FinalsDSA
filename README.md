@@ -5,6 +5,10 @@ Hoang Thiet Lam - Lead\
 Nguyen Dang Thuc\
 Bui Quang Viet\
 Thieu Van Long\
+
+#Demo
+
+#Instructions
 1.Cài đặt các file thông tin ảnh ở thư mục "Piece":\
 2.Sao chép và gán đường link dẫn trong máy cho "FILE_ICON_PATH" trong class Table(Dòng 33):{ Lưu ý : Đây là ví dụ định dạng tương tự "D:\\chesspieces\\" }\
 3.Cài đặt các file thông tin ảnh "green_dot.png":\
